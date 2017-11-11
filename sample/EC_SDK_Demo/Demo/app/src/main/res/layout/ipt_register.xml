@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ipt_register_base"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+    <include layout="@layout/dial_title"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/dp10"
+        android:id="@+id/ipt_register_relay_one">
+
+        <TextView
+            android:id="@+id/ipt_register_text_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dp20"
+            android:textSize="20sp"
+            android:text="免打扰未开启"/>
+
+        <ImageView
+            android:id="@+id/ipt_register_btn_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/dp20"
+            android:src="@drawable/setting_switch_off"
+            />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/dp10"
+        android:id="@+id/ipt_register_relay_two">
+
+        <TextView
+            android:id="@+id/ipt_register_text_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dp20"
+            android:textSize="20sp"
+            android:text="无条件前转未开启"/>
+
+        <ImageView
+            android:id="@+id/ipt_register_btn_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/dp20"
+            android:src="@drawable/setting_switch_off"
+            />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/dp10"
+        android:id="@+id/ipt_register_relay_three">
+
+        <TextView
+            android:id="@+id/ipt_register_text_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dp20"
+            android:textSize="20sp"
+            android:text="遇忙前转未开启"/>
+
+        <ImageView
+            android:id="@+id/ipt_register_btn_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/dp20"
+            android:src="@drawable/setting_switch_off"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/dp10"
+        android:id="@+id/ipt_register_relay_four">
+
+        <TextView
+            android:id="@+id/ipt_register_text_four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dp20"
+            android:textSize="20sp"
+            android:text="无应答前转未开启"/>
+
+        <ImageView
+            android:id="@+id/ipt_register_btn_four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/dp20"
+            android:src="@drawable/setting_switch_off"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/dp10"
+        android:id="@+id/ipt_register_relay_five">
+
+        <TextView
+            android:id="@+id/ipt_register_text_five"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dp20"
+            android:textSize="20sp"
+            android:text="离线前转未开启"/>
+
+        <ImageView
+            android:id="@+id/ipt_register_btn_five"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/dp20"
+            android:src="@drawable/setting_switch_off"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/dp10"
+        android:id="@+id/ipt_register_relay_six">
+
+        <TextView
+            android:id="@+id/ipt_register_text_six"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dp20"
+            android:textSize="20sp"
+            android:text="呼叫等待未开启"/>
+
+        <ImageView
+            android:id="@+id/ipt_register_btn_six"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/dp20"
+            android:src="@drawable/setting_switch_off"/>
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>
