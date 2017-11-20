@@ -43,7 +43,7 @@ public class ConfConvertUtil {
             //音频数据
             case VOICE_AND_DATA_CONF:
                 confMediaType = ConfctrlConfMediatypeFlag.CONFCTRL_E_CONF_MEDIATYPE_FLAG_VOICE.getIndex()
-                        | ConfctrlConfMediatypeFlag.CONFCTRL_E_CONF_MEDIATYPE_FLAG_HDVIDEO.getIndex();
+                        | ConfctrlConfMediatypeFlag.CONFCTRL_E_CONF_MEDIATYPE_FLAG_DATA.getIndex();
                 break;
 
             //视频数据

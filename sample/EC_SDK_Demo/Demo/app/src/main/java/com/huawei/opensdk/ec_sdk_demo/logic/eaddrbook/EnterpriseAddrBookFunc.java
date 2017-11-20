@@ -45,6 +45,9 @@ public class EnterpriseAddrBookFunc implements IEntAddressBookNotification {
     public void onEntAddressBookIconNotify(EntAddressBookConstant.Event event, Object object) {
         switch (event)
         {
+            case GET_SELF_ICON:
+                LocBroadcast.getInstance().sendBroadcast(CustomBroadcastConstants.ACTION_ENTERPRISE_GET_SELF_PHOTO_RESULT, object);
+                break;
             case GET_CONTACTS_SYSTEM_ICON:
                 LocBroadcast.getInstance().sendBroadcast(CustomBroadcastConstants.ACTION_ENTERPRISE_GET_HEAD_SYS_PHOTO, object);
                 break;

@@ -67,7 +67,13 @@ public class EnterpriseAddressBookMgr implements TupEaddrNotify {
      * Query the serial number of your own information
      * 查询自己信息的序列号
      */
-    private int querySelfSeq;
+    private int querySelfInfoSeq;
+
+    /**
+     * Query the serial number of your own icon
+     * 查询自己头像的序列号
+     */
+    private int querySelfIconSeq;
 
     /**
      * Map collection When querying a user's avatar
@@ -137,8 +143,8 @@ public class EnterpriseAddressBookMgr implements TupEaddrNotify {
      */
     public int searchSelfInfo(String keyWords)
     {
-        querySelfSeq = searchContacts(keyWords);
-        return querySelfSeq;
+        querySelfInfoSeq = searchContacts(keyWords);
+        return querySelfInfoSeq;
     }
 
     /**
@@ -167,6 +173,20 @@ public class EnterpriseAddressBookMgr implements TupEaddrNotify {
         int ret = tupEaddrManager.searchContactor(contactorSearchItem);
         Log.i(TAG, "searchResult -->" + ret);
         return seq;
+    }
+
+    /**
+     * This method is used to get self's icon.
+     * 获取自己的头像
+     * @param selfAccount Indicates account.
+     *                    登陆的账号
+     * @return int Return the result of getting user's icon. If success return 0, otherwise return corresponding error code
+     *             返回获取用户头像的结果，取值；成功返回0，失败返回相应错误码
+     */
+    public int getSelfIcon(String selfAccount)
+    {
+        querySelfIconSeq = getUserIcon(selfAccount);
+        return querySelfIconSeq;
     }
 
     /**
@@ -274,7 +294,7 @@ public class EnterpriseAddressBookMgr implements TupEaddrNotify {
                 notification.onEntAddressBookNotify(EntAddressBookConstant.Event.SEARCH_CONTACTS_NOT_FOUND, null);
             }
             //查询的登陆的用户信息
-            else if (querySelfSeq == seqNo)
+            else if (querySelfInfoSeq == seqNo)
             {
                 notification.onEntAddressBookNotify(EntAddressBookConstant.Event.SEARCH_SELF_COMPLETE, contactorInfos);
             }
@@ -293,7 +313,6 @@ public class EnterpriseAddressBookMgr implements TupEaddrNotify {
                     {
                         break;
                     }
-                    EnterpriseAddressBookMgr.getInstance().getUserIcon(contactorInfo.getStaffAccount()); //查询用户头像
                     entAddressBookInfo.setTerminal(contactorInfo.getTerminal());
                     entAddressBookInfo.setEaddrDept(contactorInfo.getDeptName());
                     entAddressBookInfo.setSysIconID(10);
@@ -333,8 +352,18 @@ public class EnterpriseAddressBookMgr implements TupEaddrNotify {
             int sysId = tupEaddrIconSearchRst.getSysAvatarID();
             String avatarFile = tupEaddrIconSearchRst.getAvatarFile();
 
+            //查询的是登陆用户的头像
+            if (querySelfIconSeq == seqNo)
+            {
+                EntAddressBookIconInfo selfIcon = new EntAddressBookIconInfo();
+                selfIcon.setAccount(account);
+                selfIcon.setIconFile(avatarFile);
+                selfIcon.setIconId(sysId);
+                selfIcon.setIconSeq(seqNo);
+                notification.onEntAddressBookIconNotify(EntAddressBookConstant.Event.GET_SELF_ICON, selfIcon);
+            }
             //获取到的是系统头像
-            if (sysId >= 0 && avatarFile.isEmpty())
+            else if (sysId >= 0 && avatarFile.isEmpty())
             {
                 EntAddressBookIconInfo iconInfo = new EntAddressBookIconInfo();
                 iconInfo.setAccount(account);

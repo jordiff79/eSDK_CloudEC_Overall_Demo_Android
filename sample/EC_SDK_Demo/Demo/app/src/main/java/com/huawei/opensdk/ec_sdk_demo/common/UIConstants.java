@@ -25,6 +25,7 @@ public final class UIConstants
     /**
      * Obtaining user avatars and info
      */
+    public static final int ENTERPRISE_HEAD_SELF = 21;
     public static final int ENTERPRISE_HEAD_SYS = 22;
     public static final int ENTERPRISE_HEAD_DEF = 23;
     public static final int ENTERPRISE_HEAD_NULL = 24;

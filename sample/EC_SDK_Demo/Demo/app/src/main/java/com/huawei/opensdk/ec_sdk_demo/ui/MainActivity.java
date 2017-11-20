@@ -67,18 +67,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private String[] mActions = new String[]{CustomBroadcastConstants.ACTION_SET_STATUS,
             CustomBroadcastConstants.ACTION_IM_LOGIN_SUCCESS,
             CustomBroadcastConstants.ACTION_IM_SET_HEAD_PHOTO,
-            CustomBroadcastConstants.ACTION_ENTERPRISE_GET_HEAD_DEF_PHOTO,
             CustomBroadcastConstants.ACTION_ENTERPRISE_GET_HEAD_PHOTO_FAILED,
-            CustomBroadcastConstants.ACTION_ENTERPRISE_GET_HEAD_SYS_PHOTO
+            CustomBroadcastConstants.ACTION_ENTERPRISE_GET_SELF_PHOTO_RESULT
     };
     private String mMyAccount;
     private ContactHeadFetcher contactHeadFetcher;
 
     private String mIconPath;
     private int mIconId;
-    private static int[] mSystemIcon = {R.drawable.head0, R.drawable.head1,
-            R.drawable.head2, R.drawable.head3, R.drawable.head4, R.drawable.head5,
-            R.drawable.head6, R.drawable.head7, R.drawable.head8, R.drawable.head9};
+    private static int[] mSystemIcon = EnterpriseAddrTools.getSystemIcon();
 
     @Override
     public void initializeComposition()
@@ -305,23 +302,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         public void handleMessage(Message msg) {
             switch (msg.what)
             {
-                case UIConstants.ENTERPRISE_HEAD_SYS:
+                case UIConstants.ENTERPRISE_HEAD_SELF:
                     if (msg.obj instanceof EntAddressBookIconInfo)
                     {
                         EntAddressBookIconInfo iconInfo = (EntAddressBookIconInfo) msg.obj;
-                        if (iconInfo.getIconId() >= 0)
+                        String defIcon = iconInfo.getIconFile();
+                        if (defIcon.isEmpty())
                         {
                             mIconId = iconInfo.getIconId();
                             mHeadIv.setImageResource(mSystemIcon[mIconId]);
                         }
-                    }
-                    break;
-                case UIConstants.ENTERPRISE_HEAD_DEF:
-                    if (msg.obj instanceof EntAddressBookIconInfo)
-                    {
-                        EntAddressBookIconInfo defIconInfo = (EntAddressBookIconInfo) msg.obj;
-                        String defIcon = defIconInfo.getIconFile();
-                        if (defIcon != "")
+                        else
                         {
                             mIconPath = Environment.getExternalStorageDirectory() + File.separator + "tupcontact" + File.separator + "icon" + File.separator + defIcon;
                             Bitmap headIcon = EnterpriseAddrTools.getBitmapByPath(mIconPath);
@@ -350,13 +341,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case CustomBroadcastConstants.ACTION_IM_LOGIN_SUCCESS:
                 updateStatus();
                 break;
-            case CustomBroadcastConstants.ACTION_ENTERPRISE_GET_HEAD_SYS_PHOTO:
-                Message msgSys = handler.obtainMessage(UIConstants.ENTERPRISE_HEAD_SYS, obj);
-                handler.sendMessage(msgSys);
-                break;
-            case CustomBroadcastConstants.ACTION_ENTERPRISE_GET_HEAD_DEF_PHOTO:
-                Message msgDef = handler.obtainMessage(UIConstants.ENTERPRISE_HEAD_DEF, obj);
-                handler.sendMessage(msgDef);
+            case CustomBroadcastConstants.ACTION_ENTERPRISE_GET_SELF_PHOTO_RESULT:
+                Message msgSelf = handler.obtainMessage(UIConstants.ENTERPRISE_HEAD_SELF, obj);
+                handler.sendMessage(msgSelf);
                 break;
             case CustomBroadcastConstants.ACTION_ENTERPRISE_GET_HEAD_PHOTO_FAILED:
                 Message msgFailed = handler.obtainMessage(UIConstants.ENTERPRISE_HEAD_NULL, obj);
@@ -369,7 +356,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private void updateHeadPhoto()
     {
-        EnterpriseAddressBookMgr.getInstance().getUserIcon(LoginMgr.getInstance().getAccount());
+        EnterpriseAddressBookMgr.getInstance().getSelfIcon(mMyAccount);
     }
 
     private void updateStatus()

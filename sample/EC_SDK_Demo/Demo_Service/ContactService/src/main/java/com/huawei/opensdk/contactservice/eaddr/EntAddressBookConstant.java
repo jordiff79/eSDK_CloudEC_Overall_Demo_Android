@@ -39,6 +39,12 @@ public class EntAddressBookConstant {
         GET_CONTACTS_ICON_FAILED(),
 
         /**
+         * Search self icon info
+         * 查询自己的头像信息
+         */
+        GET_SELF_ICON(),
+
+        /**
          * Obtain the system icon
          * 获取系统头像
          */

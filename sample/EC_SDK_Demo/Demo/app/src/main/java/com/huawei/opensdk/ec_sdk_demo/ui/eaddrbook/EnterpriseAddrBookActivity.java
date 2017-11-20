@@ -38,6 +38,7 @@ public class EnterpriseAddrBookActivity extends BaseActivity implements View.OnC
     private EditText eaddrKeys = null;
     private ImageView eaddrSearch = null;
     private ListView eaddrList = null;
+    private Toast toast;
     private EnterpriseListAdapter enterpriseListAdapter;
 
     private static List<EntAddressBookInfo> list = new ArrayList<>();
@@ -53,6 +54,20 @@ public class EnterpriseAddrBookActivity extends BaseActivity implements View.OnC
     private String mIconPath;
     private int mIconId;
     private int searchSeq;
+
+    /**
+     * Stop the portrait query annotation, When exit or query the contact again,
+     * Determine whether is less than zero, Is less than the does not invoke the portrait query method
+     * 停止查询头像的标注，当退出界面或者再次查询联系人的时候，判断是否小于0，小于则不再调用查询头像的方法
+     */
+    private int stopFlag;
+
+    /**
+     * Waiting for querying a contact ID, In this user interface invokes the query again,
+     * Ensure that in the last query results after
+     * 等候查询联系人的标示，在本界面再次调用查询的时，必须保证在上次的查询结果出来之后进行
+     */
+    private boolean waitSearch = true;
     private int[] sysIcon = EnterpriseAddrTools.getSystemIcon();  //System Avatar ID
 
     private String[] eActions = new String[]{
@@ -85,6 +100,41 @@ public class EnterpriseAddrBookActivity extends BaseActivity implements View.OnC
 
     }
 
+    /**
+     * This method is used to show Toast content.
+     * @param text Indicates show content
+     */
+    public void showToast(String text)
+    {
+        if (toast == null)
+        {
+            toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+        }
+        else
+        {
+            toast.setText(text);
+            toast.setDuration(Toast.LENGTH_SHORT);
+        }
+        toast.show();
+    }
+
+    /**
+     * This method is used to cancel Toast content.
+     */
+    public void cancelToast()
+    {
+        if (toast != null)
+        {
+            toast.cancel();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        cancelToast();
+        super.onBackPressed();
+    }
+
     @Override
     protected void onResume() {
         LocBroadcast.getInstance().registerBroadcast(this, eActions);
@@ -96,6 +146,7 @@ public class EnterpriseAddrBookActivity extends BaseActivity implements View.OnC
         switch (v.getId())
         {
             case R.id.book_back:
+                stopFlag = -1;
                 list.clear();
                 LocBroadcast.getInstance().unRegisterBroadcast(this, eActions);
                 finish();
@@ -104,19 +155,26 @@ public class EnterpriseAddrBookActivity extends BaseActivity implements View.OnC
                 String keywords = eaddrKeys.getText().toString();
                 if(null == keywords || keywords.isEmpty())
                 {
-                    Toast.makeText(EnterpriseAddrBookActivity.this,"Search content can not be empty!",Toast.LENGTH_SHORT).show();
+                    showToast("Search content can not be empty!");
                 }
-                else
+                else if (waitSearch)
                 {
                     if (list.size() == 0)
                     {
                         searchSeq = EnterpriseAddressBookMgr.getInstance().searchContacts(keywords);
+                        waitSearch = false;
                     }
                     else
                     {
+                        stopFlag = -1;
                         list.clear();
                         searchSeq = EnterpriseAddressBookMgr.getInstance().searchContacts(keywords);
+                        waitSearch = false;
                     }
+                }
+                else
+                {
+                    showToast("Querying, Please try again later...");
                 }
                 break;
             default:
@@ -144,15 +202,20 @@ public class EnterpriseAddrBookActivity extends BaseActivity implements View.OnC
                         list = contactsInfoResult.getList();
                     }
                     enterpriseListAdapter.notifyDataSetChanged(list);
+                    stopFlag = 0;
+                    EnterpriseAddressBookMgr.getInstance().getUserIcon(list.get(stopFlag).getEaddrAccount()); //查询用户头像
+                    waitSearch = true;
                     break;
                 case UIConstants.ENTERPRISE_SEARCH_NULL:
                     list.clear();
                     enterpriseListAdapter.notifyDataSetChanged(list);
-                    Toast.makeText(EnterpriseAddrBookActivity.this,"There is no inquiry to the contact!",Toast.LENGTH_SHORT).show();
+                    waitSearch = true;
+                    showToast("There is no inquiry to the contact!");
                     eaddrKeys.setText("");
                     break;
                 case UIConstants.ENTERPRISE_SEARCH_FAILED:
-                    Toast.makeText(EnterpriseAddrBookActivity.this,"Search contact failed!",Toast.LENGTH_SHORT).show();
+                    waitSearch = true;
+                    showToast("Search contact failed!");
                 case UIConstants.ENTERPRISE_HEAD_SYS:
                     if (msg.obj instanceof EntAddressBookIconInfo)
                     {
@@ -165,6 +228,11 @@ public class EnterpriseAddrBookActivity extends BaseActivity implements View.OnC
                                 list.get(i).setSysIconID(sysIcon[mIconId]);
                                 break;
                             }
+                        }
+
+                        if (stopFlag >= 0 && stopFlag < list.size() - 1)
+                        {
+                            EnterpriseAddressBookMgr.getInstance().getUserIcon(list.get(++stopFlag).getEaddrAccount()); //查询用户头像
                         }
                         enterpriseListAdapter.notifyDataSetChanged(list);
                     }
@@ -183,6 +251,11 @@ public class EnterpriseAddrBookActivity extends BaseActivity implements View.OnC
                                 break;
                             }
                         }
+
+                        if (stopFlag >= 0 && stopFlag < list.size() - 1)
+                        {
+                            EnterpriseAddressBookMgr.getInstance().getUserIcon(list.get(++stopFlag).getEaddrAccount()); //查询用户头像
+                        }
                         enterpriseListAdapter.notifyDataSetChanged(list);
                     }
                     break;
@@ -194,6 +267,12 @@ public class EnterpriseAddrBookActivity extends BaseActivity implements View.OnC
                         {
                             list.get(w).setSysIconID(10);
                         }
+
+                        if (stopFlag >= 0 && stopFlag < list.size() - 1)
+                        {
+                            EnterpriseAddressBookMgr.getInstance().getUserIcon(list.get(++stopFlag).getEaddrAccount()); //查询用户头像
+                        }
+                        enterpriseListAdapter.notifyDataSetChanged(list);
                     }
                     break;
                 default:

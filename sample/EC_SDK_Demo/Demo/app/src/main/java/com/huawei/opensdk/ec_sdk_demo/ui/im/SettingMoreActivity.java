@@ -62,9 +62,8 @@ public class SettingMoreActivity extends BaseActivity implements View.OnClickLis
 
     private String[] mActions = new String[]{CustomBroadcastConstants.ACTION_SET_STATUS,
             CustomBroadcastConstants.ACTION_IM_LOGIN_SUCCESS,
-            CustomBroadcastConstants.ACTION_ENTERPRISE_GET_HEAD_DEF_PHOTO,
             CustomBroadcastConstants.ACTION_ENTERPRISE_GET_HEAD_PHOTO_FAILED,
-            CustomBroadcastConstants.ACTION_ENTERPRISE_GET_HEAD_SYS_PHOTO
+            CustomBroadcastConstants.ACTION_ENTERPRISE_GET_SELF_PHOTO_RESULT
     };
     private SimpleListDialog mStatusDialog;
     private SimpleListDialog mPhotoDialog;
@@ -72,9 +71,7 @@ public class SettingMoreActivity extends BaseActivity implements View.OnClickLis
 
     private String mIconPath;
     private int mIconId;
-    private static int[] mSystemIcon = {R.drawable.head0, R.drawable.head1,
-            R.drawable.head2, R.drawable.head3, R.drawable.head4, R.drawable.head5,
-            R.drawable.head6, R.drawable.head7, R.drawable.head8, R.drawable.head9};
+    private static int[] mSystemIcon = EnterpriseAddrTools.getSystemIcon();
 
     private Handler mHandler = new Handler()
     {
@@ -97,23 +94,17 @@ public class SettingMoreActivity extends BaseActivity implements View.OnClickLis
                     LocBroadcast.getInstance().sendBroadcast(CustomBroadcastConstants.ACTION_IM_SET_HEAD_PHOTO, null);
                     Log.i(UIConstants.DEMO_TAG, "Set Defined HeadPhoto Success");
                     break;
-                case UIConstants.ENTERPRISE_HEAD_SYS:
+                case UIConstants.ENTERPRISE_HEAD_SELF:
                     if (msg.obj instanceof EntAddressBookIconInfo)
                     {
                         EntAddressBookIconInfo iconInfo = (EntAddressBookIconInfo) msg.obj;
-                        if (iconInfo.getIconId() >= 0)
+                        String defIcon = iconInfo.getIconFile();
+                        if (defIcon.isEmpty())
                         {
                             mIconId = iconInfo.getIconId();
                             headImg.setImageResource(mSystemIcon[mIconId]);
                         }
-                    }
-                    break;
-                case UIConstants.ENTERPRISE_HEAD_DEF:
-                    if (msg.obj instanceof EntAddressBookIconInfo)
-                    {
-                        EntAddressBookIconInfo defIconInfo = (EntAddressBookIconInfo) msg.obj;
-                        String defIcon = defIconInfo.getIconFile();
-                        if (defIcon != "")
+                        else
                         {
                             mIconPath = Environment.getExternalStorageDirectory() + File.separator + "tupcontact" + File.separator + "icon" + File.separator + defIcon;
                             Bitmap headIcon = EnterpriseAddrTools.getBitmapByPath(mIconPath);
@@ -156,7 +147,7 @@ public class SettingMoreActivity extends BaseActivity implements View.OnClickLis
 
     private void updateMyHeadPhoto()
     {
-        EnterpriseAddressBookMgr.getInstance().getUserIcon(mMyAccount);
+        EnterpriseAddressBookMgr.getInstance().getSelfIcon(mMyAccount);
     }
 
     @Override
@@ -306,13 +297,9 @@ public class SettingMoreActivity extends BaseActivity implements View.OnClickLis
             case CustomBroadcastConstants.ACTION_IM_LOGIN_SUCCESS:
                 updateMyStatus();
                 break;
-            case CustomBroadcastConstants.ACTION_ENTERPRISE_GET_HEAD_SYS_PHOTO:
-                Message msgSys = mHandler.obtainMessage(UIConstants.ENTERPRISE_HEAD_SYS, obj);
-                mHandler.sendMessage(msgSys);
-                break;
-            case CustomBroadcastConstants.ACTION_ENTERPRISE_GET_HEAD_DEF_PHOTO:
-                Message msgDef = mHandler.obtainMessage(UIConstants.ENTERPRISE_HEAD_DEF, obj);
-                mHandler.sendMessage(msgDef);
+            case CustomBroadcastConstants.ACTION_ENTERPRISE_GET_SELF_PHOTO_RESULT:
+                Message msgSelfInfo = mHandler.obtainMessage(UIConstants.ENTERPRISE_HEAD_SELF, obj);
+                mHandler.sendMessage(msgSelfInfo);
                 break;
             case CustomBroadcastConstants.ACTION_ENTERPRISE_GET_HEAD_PHOTO_FAILED:
                 Message msgFailed = mHandler.obtainMessage(UIConstants.ENTERPRISE_HEAD_NULL, obj);

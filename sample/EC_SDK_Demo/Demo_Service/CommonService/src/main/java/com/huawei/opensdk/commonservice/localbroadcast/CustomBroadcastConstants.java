@@ -95,6 +95,7 @@ public interface CustomBroadcastConstants
     String ACTION_ENTERPRISE_GET_CONTACT_RESULT = "com.huawei.opensdk.eaddr.getcontactresult";
     String ACTION_ENTERPRISE_GET_CONTACT_NULL = "com.huawei.opensdk.eaddr.getcontactnull";
     String ACTION_ENTERPRISE_GET_CONTACT_FAILED = "com.huawei.opensdk.eaddr.getcontactfailed";
+    String ACTION_ENTERPRISE_GET_SELF_PHOTO_RESULT = "com.huawei.opensdk.eaddr.getselfphotoresult";
     String ACTION_ENTERPRISE_GET_HEAD_PHOTO_FAILED = "com.huawei.opensdk.eaddr.getheadphotofailed";
     String ACTION_ENTERPRISE_GET_HEAD_SYS_PHOTO = "com.huawei.opensdk.eaddr.getheadsysphoto";
     String ACTION_ENTERPRISE_GET_HEAD_DEF_PHOTO = "com.huawei.opensdk.eaddr.getheaddefphoto";
