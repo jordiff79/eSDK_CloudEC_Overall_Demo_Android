@@ -25,6 +25,7 @@ import common.ReInviteNoSdpReplyMode;
 import common.TupBool;
 import common.TupCallParam;
 import object.TupCallCfgAudioVideo;
+import object.TupCallCfgBFCP;
 import object.TupCallCfgMedia;
 import object.TupCallCfgSIP;
 import tupsdk.TupCallManager;
@@ -117,6 +118,11 @@ public class TupMgr
     private TupCallCfgMedia tupCallCfgMedia = null;
 
     /**
+     * 辅流BFCP的配置信息
+     */
+    private TupCallCfgBFCP tupCallCfgBFCP = null;
+
+    /**
      * 音视频注册信息
      */
     private TupCallCfgAudioVideo tupCallCfgAudioVideo = null;
@@ -194,6 +200,13 @@ public class TupMgr
         return tupCallCfgAudioVideo;
     }
 
+    public TupCallCfgBFCP getTupCallCfgBFCP() {
+        if (tupCallCfgBFCP == null) {
+            TupCallCfgBFCP bfcpCfg = new TupCallCfgBFCP();
+            tupCallCfgBFCP = bfcpCfg;
+        }
+        return tupCallCfgBFCP;
+    }
 
     /**
      * This method is used to set log param
@@ -462,10 +475,11 @@ public class TupMgr
      * 去初始化数据会议数据
      */
     public void uninitDataConfSDK() {
-        System.loadLibrary("TupConf");
+
         if (this.dataConfManagerIns != null) {
             this.dataConfManagerIns.exitSDK();
         }
+        this.dataConfManagerIns = null;
     }
 
     private int initCtd() {
@@ -617,10 +631,15 @@ public class TupMgr
 
     private void setDefaultMediaConfig()
     {
-        TupCallCfgMedia tupCallCfgMedia = new TupCallCfgMedia();
+        TupCallCfgMedia tupCallCfgMedia = TupMgr.getInstance().getTupCallCfgMedia();
         tupCallCfgMedia.setEnableBFCP(TupBool.TUP_TRUE);
+        tupCallCfgMedia.setLoosePortNego(TupBool.TUP_TRUE);
+        tupCallCfgMedia.setLooseIPNego(TupBool.TUP_TRUE);
 
         this.callManagerIns.setCfgMedia(tupCallCfgMedia);
+
+        //this.callManagerIns.setAssistStreamEnable(true);
+
     }
 
 }

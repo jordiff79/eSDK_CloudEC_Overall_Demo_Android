@@ -16,6 +16,8 @@ public class LoginConstant {
     public static final String TUP_VPN = "tupVpn";
     public static final String TUP_REGSERVER = "tupRegisterServer";
     public static final String TUP_PORT = "tupPort";
+    public static final String TUP_SRTP = "tupSrtp";
+    public static final String TUP_SIP_TRANSPORT = "tupSipTransport";
     public static final String BLANK_STRING = "";
 
     public static final String UPORTAL_REGISTER_SERVER = "10.174.12.169";

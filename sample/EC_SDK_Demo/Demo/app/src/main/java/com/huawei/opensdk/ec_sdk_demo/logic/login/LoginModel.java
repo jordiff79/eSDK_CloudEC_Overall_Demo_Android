@@ -61,6 +61,16 @@ public class LoginModel
         return mSharedPreferences.getString(LoginConstant.TUP_PORT, LoginConstant.BLANK_STRING);
     }
 
+    public int getSrtpMode()
+    {
+        return mSharedPreferences.getInt(LoginConstant.TUP_SRTP, 0);
+    }
+
+    public int getSipTransport()
+    {
+        return mSharedPreferences.getInt(LoginConstant.TUP_SIP_TRANSPORT, 0);
+    }
+
     /**
      * save login params
      * @param userName user name
@@ -85,6 +95,8 @@ public class LoginModel
             mSharedPreferences.edit().putBoolean(LoginConstant.TUP_VPN, false)
                     .putString(LoginConstant.TUP_REGSERVER, LoginConstant.UPORTAL_REGISTER_SERVER)
                     .putString(LoginConstant.TUP_PORT, LoginConstant.UPORTAL_PORT)
+                    .putInt(LoginConstant.TUP_SRTP, 0)
+                    .putInt(LoginConstant.TUP_SIP_TRANSPORT, 0)
                     .commit();
         }
     }

@@ -92,7 +92,7 @@ public class ServiceMgr
         int logLevel = 3; //info level
         int maxSizeKB = 1024 * 4;
         int fileCount = 1;
-        String logPath = Environment.getExternalStorageDirectory() + File.separator + "ECSDKDemo";
+        String logPath = Environment.getExternalStorageDirectory() + File.separator + "ECSDKDemo" + "/";
         tupMgr.setLogParam(logLevel, maxSizeKB, fileCount, logPath);
 
         /* Step 2, reg service event notify process */

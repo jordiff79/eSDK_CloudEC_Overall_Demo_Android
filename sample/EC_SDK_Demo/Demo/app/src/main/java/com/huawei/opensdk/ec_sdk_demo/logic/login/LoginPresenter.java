@@ -71,6 +71,8 @@ public class LoginPresenter extends MVPBasePresenter<ILoginContract.LoginBaseVie
             return;
         }
 
+
+
         String regServerAddress = mLoginModel.getRegServer();
         String serverPort = mLoginModel.getPort();
 
@@ -94,22 +96,17 @@ public class LoginPresenter extends MVPBasePresenter<ILoginContract.LoginBaseVie
         }
 
         LoginParam loginParam = new LoginParam();
-//        loginParam.setRegisterServerIp(regServerAddress);
-//        loginParam.setServerPort(serverPort);
-//        loginParam.setSipPassword(password);
-//        loginParam.setSipName(userName);
-//        loginParam.setVPN(sharedPreferences.getBoolean(Constant.TUP_VPN, false));
-//        LoginMgr.getInstance().login(loginParam);
 
         loginParam.setServerUrl(regServerAddress);
         loginParam.setServerPort(Integer.parseInt(serverPort));
         loginParam.setUserName(userName);
         loginParam.setPassword(password);
-//        loginParam.setServerUrl("117.78.44.110");
-//        loginParam.setServerPort(8443);
-//        loginParam.setUserName("wudingyuan02@huawei.com");
-//        loginParam.setPassword("Huawei@123");
+
         loginParam.setVPN(sharedPreferences.getBoolean(LoginConstant.TUP_VPN, false));
+
+        loginParam.setSrtpMode(mLoginModel.getSrtpMode());
+        loginParam.setSipTransportMode(mLoginModel.getSipTransport());
+
         LoginMgr.getInstance().login(loginParam);
 
         mLoginModel.saveLoginParams(userName, password);

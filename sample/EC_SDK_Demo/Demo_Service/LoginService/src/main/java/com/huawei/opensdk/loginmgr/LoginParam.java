@@ -47,6 +47,17 @@ public class LoginParam {
      */
     private boolean isVPN = false;
 
+    /**
+     * SRTP mode
+     */
+    private int srtpMode = 0;
+
+    /**
+     * Sip signaling transport mode
+     */
+    private int sipTransportMode = 0;
+
+
     public LoginParam(){
 
     }
@@ -137,5 +148,21 @@ public class LoginParam {
 
     public void setVPN(boolean VPN) {
         isVPN = VPN;
+    }
+
+    public int getSrtpMode() {
+        return srtpMode;
+    }
+
+    public void setSrtpMode(int srtpMode) {
+        this.srtpMode = srtpMode;
+    }
+
+    public int getSipTransportMode() {
+        return sipTransportMode;
+    }
+
+    public void setSipTransportMode(int sipTransportMode) {
+        this.sipTransportMode = sipTransportMode;
     }
 }

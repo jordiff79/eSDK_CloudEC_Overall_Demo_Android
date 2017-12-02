@@ -907,6 +907,10 @@ public class MeetingInstance {
         String serverIp;
         String svrinterIp;
 
+        int option = ConfDefines.CONF_OPTION_USERLIST
+                | ConfDefines.CONF_OPTION_QOS
+                | ConfDefines.CONF_OPTION_HOST_NO_GRAB;
+
         ConfInfo confInfo = new ConfInfo();
 
         int Solution = LoginCenter.getInstance().getSolution();
@@ -920,6 +924,8 @@ public class MeetingInstance {
         else
         {
             //mediaX
+            option |= ConfDefines.CONF_OPTION_NO_VIDEO;
+
             siteUrl = joinDataConfParams.getSiteUrl();
             serverIp = joinDataConfParams.getSbcServerAddress();
             svrinterIp = joinDataConfParams.getServerIp();
@@ -957,7 +963,7 @@ public class MeetingInstance {
         confInfo.setUserInfoLen(userInfo.length);
         confInfo.setUserInfo(userInfo);
 
-        confInfo.setConfOption(0x0001);
+        confInfo.setConfOption(option);
         confInfo.setConfTitle("DataConference");
 
         dataConference.joinConf(confInfo);

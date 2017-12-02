@@ -1,5 +1,7 @@
 package com.huawei.opensdk.sdkwrapper.login;
 
+import common.TupCallParam;
+
 /**
  * This class is about sip account registration parameter class.
  * SIP账号注册参数类

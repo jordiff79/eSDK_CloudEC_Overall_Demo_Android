@@ -1015,7 +1015,7 @@ public class CallMgr extends TupCallBackBaseNotify implements ICallMgr
     private void configAudioAndVideo()
     {
         //大部分参数使用SDKWarpper中的默认配置，有需要可采用如下样例修改
-        //TupCallCfgAudioVideo tpCllCfgAdVd = new TupCallCfgAudioVideo();
+        //TupCallCfgAudioVideo tpCllCfgAdVd = TupMgr.getInstance().getTupCallCfgAudioVideo();
         //tpCllCfgAdVd.setAudioAec(1);
         //TupMgr.getInstance().getCallManagerIns().setCfgAudioAndVideo(tpCllCfgAdVd);
     }
@@ -1031,7 +1031,7 @@ public class CallMgr extends TupCallBackBaseNotify implements ICallMgr
     private void configMedia()
     {
         //大部分参数使用SDKWarpper中的默认配置，有需要可采用如下样例修改
-        //TupCallCfgMedia tupCallCfgMedia = new TupCallCfgMedia();
+        //TupCallCfgMedia tupCallCfgMedia = TupMgr.getInstance().getTupCallCfgMedia();
         //tupCallCfgMedia.setEnableBFCP(TupBool.TUP_FALSE);
         //TupMgr.getInstance().getCallManagerIns().setCfgMedia(tupCallCfgMedia);
     }

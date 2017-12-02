@@ -87,8 +87,14 @@ public class LoginMgr implements ITupLoginCenterNotify
         String localIpAddress = DeviceManager.getLocalIpAddress(loginParam.isVPN());
         LoginCenter.getInstance().setLocalIPAddress(localIpAddress);
 
-        //sip authorize info
-        //sip鉴权信息
+        if (TupMgr.getInstance().getFeatureMgr().isSupportAudioAndVideoCall())
+        {
+            LoginCenter.getInstance().setSrtpMode(loginParam.getSrtpMode());
+            LoginCenter.getInstance().setSipTransportMode(loginParam.getSipTransportMode());
+        }
+
+        //user authorize info
+        //用户鉴权信息
         LoginAuthInfo authInfo = new LoginAuthInfo();
         authInfo.setUserName(loginParam.getUserName());
         authInfo.setPassword(loginParam.getPassword());

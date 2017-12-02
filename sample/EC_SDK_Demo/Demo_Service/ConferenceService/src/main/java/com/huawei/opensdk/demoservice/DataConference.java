@@ -28,6 +28,7 @@ import com.huawei.meeting.IConferenceUI;
 import com.huawei.opensdk.commonservice.common.LocContext;
 import com.huawei.opensdk.demoservice.data.CameraEntity;
 import com.huawei.opensdk.demoservice.data.callBackWapper.VideoSwitchInfoWapper;
+import com.huawei.opensdk.sdkwrapper.login.LoginCenter;
 import com.huawei.opensdk.sdkwrapper.manager.TupMgr;
 import com.huawei.videoengine.ViERenderer;
 
@@ -106,14 +107,20 @@ public class DataConference implements IConferenceUI {
     private boolean isRelease;
 
     /** Conference component switch */
+//    private int componentVal = ConfDefines.IID_COMPONENT_BASE
+//            | ConfDefines.IID_COMPONENT_DS
+//            | ConfDefines.IID_COMPONENT_AS
+//            | ConfDefines.IID_COMPONENT_AUDIO
+//            | ConfDefines.IID_COMPONENT_VIDEO
+//            | ConfDefines.IID_COMPONENT_CHAT
+//            | ConfDefines.IID_COMPONENT_POLLING
+//            | ConfDefines.IID_COMPONENT_FT
+//            | ConfDefines.IID_COMPONENT_WB;
+
     private int componentVal = ConfDefines.IID_COMPONENT_BASE
             | ConfDefines.IID_COMPONENT_DS
             | ConfDefines.IID_COMPONENT_AS
-            | ConfDefines.IID_COMPONENT_AUDIO
-            | ConfDefines.IID_COMPONENT_VIDEO
             | ConfDefines.IID_COMPONENT_CHAT
-            | ConfDefines.IID_COMPONENT_POLLING
-            | ConfDefines.IID_COMPONENT_FT
             | ConfDefines.IID_COMPONENT_WB;
 
     public static final String DATA_CONF_RES_PATH = LocContext.
@@ -740,6 +747,12 @@ public class DataConference implements IConferenceUI {
      */
     private int loadComponent()
     {
+        int solution = LoginCenter.getInstance().getSolution();
+        if (solution == LoginCenter.getInstance().CLOUD_PBX)
+        {
+            componentVal |= ConfDefines.IID_COMPONENT_VIDEO;
+        }
+
         int ret = mConfIns.confLoadComponent(componentVal);
         if (ret != 0) {
             Log.e(TAG, "confLoadComponent->" + ret);

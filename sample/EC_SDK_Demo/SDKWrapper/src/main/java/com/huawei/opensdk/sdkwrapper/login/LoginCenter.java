@@ -21,7 +21,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import common.FireWallMode;
+import common.TupCallParam;
 import object.TupCallCfgAccount;
+import object.TupCallCfgMedia;
 import object.TupCallCfgSIP;
 
 /**
@@ -141,6 +143,17 @@ public class LoginCenter {
     private int solution;
 
     /**
+     * SRTP mode
+     */
+    private int srtpMode = 0;
+
+    /**
+     * Sip signaling transport mode
+     */
+    private int sipTransportMode = 0;
+
+
+    /**
      * This is a constructor of LoginCenter class.
      * 构造方法
      */
@@ -223,10 +236,23 @@ public class LoginCenter {
 
         TupMgr.getInstance().getCallManagerIns().setTelNum(LoginCenter.getInstance().getSipAccountInfo().getSipNumber());
 
+        TupCallCfgMedia tupCallCfgMedia = TupMgr.getInstance().getTupCallCfgMedia();
+        tupCallCfgMedia.setMediaSrtpMode(this.getSrtpMode());
+        TupMgr.getInstance().getCallManagerIns().setCfgMedia(tupCallCfgMedia);
+
         /* Set server address and local address info */
         TupCallCfgSIP tupCallCfgSIP = TupMgr.getInstance().getTupCallCfgSIP();
-        tupCallCfgSIP.setServerRegPrimary(sipAccountInfo.getRegisterServerAddr(), sipAccountInfo.getRegisterServerPort());
-        tupCallCfgSIP.setServerProxyPrimary(sipAccountInfo.getProxyServerAddr(), sipAccountInfo.getProxyServerPort());
+
+        if (this.getSipTransportMode() == TupCallParam.CALL_E_TRANSPORTMODE.CALL_E_TRANSPORTMODE_UDP) {
+            tupCallCfgSIP.setServerRegPrimary(sipAccountInfo.getRegisterServerAddr(), sipAccountInfo.getRegisterServerPort());
+            tupCallCfgSIP.setServerProxyPrimary(sipAccountInfo.getProxyServerAddr(), sipAccountInfo.getProxyServerPort());
+        }else
+        {
+            tupCallCfgSIP.setServerRegPrimary(sipAccountInfo.getRegisterServerAddr(), sipAccountInfo.getRegisterServerPort() + 1);
+            tupCallCfgSIP.setServerProxyPrimary(sipAccountInfo.getProxyServerAddr(), sipAccountInfo.getProxyServerPort() + 1);
+        }
+
+        tupCallCfgSIP.setSipTransMode(this.getSipTransportMode());
         tupCallCfgSIP.setNetAddress(sipAccountInfo.getLocalIpAddress());
         tupCallCfgSIP.setSipPort(sipAccountInfo.getLocalSIPPort());
 
@@ -705,5 +731,49 @@ public class LoginCenter {
         this.selfInfo = selfInfo;
     }
 
+
+    public int getSrtpMode() {
+        int srtpMode = TupCallParam.CALL_E_SRTP_MODE.CALL_E_SRTP_MODE_DISABLE;
+        switch (this.srtpMode) {
+            case 0:
+                srtpMode = TupCallParam.CALL_E_SRTP_MODE.CALL_E_SRTP_MODE_DISABLE;
+                break;
+            case 1:
+                srtpMode = TupCallParam.CALL_E_SRTP_MODE.CALL_E_SRTP_MODE_OPTION;
+                break;
+            case 2:
+                srtpMode = TupCallParam.CALL_E_SRTP_MODE.CALL_E_SRTP_MODE_FORCE;
+                break;
+            default:
+                break;
+        }
+        return srtpMode;
+    }
+
+    public void setSrtpMode(int mode) {
+        this.srtpMode = mode;
+    }
+
+    public int getSipTransportMode() {
+        int sipTransport = TupCallParam.CALL_E_TRANSPORTMODE.CALL_E_TRANSPORTMODE_UDP;
+        switch (this.sipTransportMode) {
+            case 0:
+                sipTransport = TupCallParam.CALL_E_TRANSPORTMODE.CALL_E_TRANSPORTMODE_UDP;
+                break;
+            case 1:
+                sipTransport = TupCallParam.CALL_E_TRANSPORTMODE.CALL_E_TRANSPORTMODE_TLS;
+                break;
+            case 2:
+                sipTransport = TupCallParam.CALL_E_TRANSPORTMODE.CALL_E_TRANSPORTMODE_TCP;
+                break;
+            default:
+                break;
+        }
+        return sipTransport;
+    }
+
+    public void setSipTransportMode(int sipTransportMode) {
+        this.sipTransportMode = sipTransportMode;
+    }
 
 }
