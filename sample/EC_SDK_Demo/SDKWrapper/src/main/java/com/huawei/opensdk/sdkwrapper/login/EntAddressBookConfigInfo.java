@@ -13,30 +13,16 @@ public class EntAddressBookConfigInfo {
     private String token;
 
     /**
-     * SIP IP Multimedia Private Identity
-     * SIP IP多媒体私有标识
+     * Querying a contact server address
+     * 查询联系人服务器地址
      */
-    private String impi;
+    private String contactServer;
 
     /**
-     * Register server address
-     * 注册服务器地址
+     * Querying icon server address
+     * 查询头像服务器地址
      */
-    private String reg_server;
-
-    /**
-     * Register Server port number
-     * 注册服务器端口号
-     */
-    private int reg_port;
-
-    public int getReg_port() {
-        return reg_port;
-    }
-
-    public void setReg_port(int reg_port) {
-        this.reg_port = reg_port;
-    }
+    private String iconServer;
 
     public String getToken() {
         return token;
@@ -46,19 +32,19 @@ public class EntAddressBookConfigInfo {
         this.token = token;
     }
 
-    public String getImpi() {
-        return impi;
+    public String getContactServer() {
+        return contactServer;
     }
 
-    public void setImpi(String impi) {
-        this.impi = impi;
+    public void setContactServer(String contactServer) {
+        this.contactServer = contactServer;
     }
 
-    public String getReg_server() {
-        return reg_server;
+    public String getIconServer() {
+        return iconServer;
     }
 
-    public void setReg_server(String reg_server) {
-        this.reg_server = reg_server;
+    public void setIconServer(String iconServer) {
+        this.iconServer = iconServer;
     }
 }

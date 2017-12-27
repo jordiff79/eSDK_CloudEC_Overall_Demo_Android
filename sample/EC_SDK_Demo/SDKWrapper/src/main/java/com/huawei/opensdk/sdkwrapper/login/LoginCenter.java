@@ -244,7 +244,8 @@ public class LoginCenter {
         TupCallCfgSIP tupCallCfgSIP = TupMgr.getInstance().getTupCallCfgSIP();
 
         if (this.getSipTransportMode() == TupCallParam.CALL_E_TRANSPORTMODE.CALL_E_TRANSPORTMODE_UDP) {
-            tupCallCfgSIP.setServerRegPrimary(sipAccountInfo.getRegisterServerAddr(), sipAccountInfo.getRegisterServerPort());
+            //tupCallCfgSIP.setServerRegPrimary(sipAccountInfo.getRegisterServerAddr(), sipAccountInfo.getRegisterServerPort());
+            tupCallCfgSIP.setServerRegPrimary(sipAccountInfo.getDomain(), sipAccountInfo.getRegisterServerPort());
             tupCallCfgSIP.setServerProxyPrimary(sipAccountInfo.getProxyServerAddr(), sipAccountInfo.getProxyServerPort());
         }else
         {
@@ -395,10 +396,9 @@ public class LoginCenter {
     public EntAddressBookConfigInfo getEaddrConfigInfo(LoginUportalAuthorizeResult authorizeResult) {
         LoginSingleServerInfo singleServerInfo = authorizeResult.getAuthSerinfo();
         EntAddressBookConfigInfo configInfo = new EntAddressBookConfigInfo();
-        configInfo.setImpi(authorizeResult.getSipImpi());
         configInfo.setToken(authorizeResult.getAuthToken());
-        configInfo.setReg_port(singleServerInfo.getServerPort());
-        configInfo.setReg_server(singleServerInfo.getServerUri());
+        configInfo.setContactServer("https://" + singleServerInfo.getServerUri() + ":" + singleServerInfo.getServerPort() + "/services");
+        configInfo.setIconServer("https://" + singleServerInfo.getServerUri() + ":" + singleServerInfo.getServerPort() + "/headportrait");
         return configInfo;
     }
 

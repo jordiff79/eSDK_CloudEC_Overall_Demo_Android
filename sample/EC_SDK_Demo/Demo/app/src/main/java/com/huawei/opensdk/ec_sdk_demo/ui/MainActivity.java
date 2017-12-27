@@ -68,7 +68,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             CustomBroadcastConstants.ACTION_IM_LOGIN_SUCCESS,
             CustomBroadcastConstants.ACTION_IM_SET_HEAD_PHOTO,
             CustomBroadcastConstants.ACTION_ENTERPRISE_GET_HEAD_PHOTO_FAILED,
-            CustomBroadcastConstants.ACTION_ENTERPRISE_GET_SELF_PHOTO_RESULT
+            CustomBroadcastConstants.ACTION_ENTERPRISE_GET_SELF_PHOTO_RESULT,
+            CustomBroadcastConstants.ACTION_ENTERPRISE_GET_SELF_RESULT
     };
     private String mMyAccount;
     private ContactHeadFetcher contactHeadFetcher;
@@ -101,7 +102,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         initIndicator();
         initViewPager();
-        initDrawerShow();
+//        initDrawerShow();
 
         settingButton.setOnClickListener(this);
         logoutButton.setOnClickListener(this);
@@ -233,6 +234,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 showLogoutDialog();
                 break;
             case R.id.nav_iv:
+                EnterpriseAddressBookMgr.getInstance().searchSelfInfo(mMyAccount);
                 mDrawerLayout.openDrawer(Gravity.LEFT);
                 break;
             case R.id.iv_setting:
@@ -323,6 +325,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 case UIConstants.ENTERPRISE_HEAD_NULL:
                     mHeadIv.setBackgroundResource(R.drawable.default_head_local);
                     break;
+                case UIConstants.ENTERPRISE_SELF_TERMINAL:
+                    initDrawerShow();
+                    break;
                 default:
                     break;
 
@@ -348,6 +353,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case CustomBroadcastConstants.ACTION_ENTERPRISE_GET_HEAD_PHOTO_FAILED:
                 Message msgFailed = handler.obtainMessage(UIConstants.ENTERPRISE_HEAD_NULL, obj);
                 handler.sendMessage(msgFailed);
+                break;
+            case CustomBroadcastConstants.ACTION_ENTERPRISE_GET_SELF_RESULT:
+                handler.sendEmptyMessage(UIConstants.ENTERPRISE_SELF_TERMINAL);
                 break;
             default:
                 break;

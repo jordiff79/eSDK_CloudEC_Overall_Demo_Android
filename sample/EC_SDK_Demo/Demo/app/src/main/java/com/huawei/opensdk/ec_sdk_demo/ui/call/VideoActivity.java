@@ -73,6 +73,7 @@ public class VideoActivity extends MVPBaseActivity<IVideoCallContract.VideoCallB
 
     private CallInfo mCallInfo;
     private int mCallID;
+    private Object thisVideoActivity = this;
 
     private Handler mHandler = new Handler()
     {
@@ -83,7 +84,7 @@ public class VideoActivity extends MVPBaseActivity<IVideoCallContract.VideoCallB
             {
                 case ADD_LOCAL_VIEW:
                     addSurfaceView(true);
-                    mPresenter.setAutoRotation(this, true);
+                    mPresenter.setAutoRotation(thisVideoActivity, true);
                     break;
 
                 default:

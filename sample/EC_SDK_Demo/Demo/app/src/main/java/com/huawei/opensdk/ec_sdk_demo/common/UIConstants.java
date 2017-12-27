@@ -32,5 +32,6 @@ public final class UIConstants
     public static final int ENTERPRISE_SEARCH_SUCCESS = 0;
     public static final int ENTERPRISE_SEARCH_NULL = 1;
     public static final int ENTERPRISE_SEARCH_FAILED = 2;
+    public static final int ENTERPRISE_SELF_TERMINAL = 25;
 
 }

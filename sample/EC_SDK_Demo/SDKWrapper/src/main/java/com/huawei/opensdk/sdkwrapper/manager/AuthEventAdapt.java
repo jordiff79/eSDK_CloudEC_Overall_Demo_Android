@@ -15,6 +15,7 @@ import com.huawei.opensdk.sdkwrapper.login.LoginResult;
 import com.huawei.opensdk.sdkwrapper.login.LoginStatus;
 import com.huawei.opensdk.sdkwrapper.login.SipAccountInfo;
 import com.huawei.tup.ctd.CtdServerPara;
+import com.huawei.tup.eaddr.TupEaddrContactorSearchItem;
 import com.huawei.tup.eaddr.TupEaddrProxy;
 import com.huawei.tup.eaddr.TupEaddrUportalConfig;
 import com.huawei.tup.login.LoginAuthorizeResult;
@@ -468,15 +469,13 @@ class AuthEventAdapt implements TupLoginNotify {
 
         //Set up configuration information for an enterprise address book
         if (TupMgr.getInstance().getFeatureMgr().isSupportAddressbook()) {
-            //EntAddressBookConfigInfo entAddressBookConfigInfo = getEntAddressBookConfigInfo(loginUportalAuthorizeResult);
-            //LoginCenter.getInstance().setEntAddressBookConfigInfo(entAddressBookConfigInfo);
             TupEaddrUportalConfig eaddrUportalConfig = new TupEaddrUportalConfig();
             EntAddressBookConfigInfo entAddressBookConfigInfo = LoginCenter.getInstance().getEntAddressBookConfigInfo();
             eaddrUportalConfig.setToken(entAddressBookConfigInfo.getToken());
-            eaddrUportalConfig.setAvatarServerAddr("https://" + entAddressBookConfigInfo.getReg_server() + ":" + entAddressBookConfigInfo.getReg_port() + "/headportrait");
+            eaddrUportalConfig.setAvatarServerAddr(entAddressBookConfigInfo.getIconServer());
             eaddrUportalConfig.setCertFilePath("");
             eaddrUportalConfig.setDeptFilePath(CONTACT_FILE_PATH + File.separator + "dept" + File.separator);
-            eaddrUportalConfig.setHttpServerAddr("https://" + entAddressBookConfigInfo.getReg_server() + ":" + entAddressBookConfigInfo.getReg_port() + "/services");
+            eaddrUportalConfig.setHttpServerAddr(entAddressBookConfigInfo.getContactServer());
             File file = new File(CONTACT_FILE_PATH + File.separator + "icon" + File.separator);
             if (!file.exists())
             {
@@ -490,6 +489,15 @@ class AuthEventAdapt implements TupLoginNotify {
             TupEaddrProxy tupEaddrProxy = new TupEaddrProxy("", 0, "", "");
             eaddrUportalConfig.setPorxy(tupEaddrProxy);
             TupMgr.getInstance().getEaddrManagerIns().config(eaddrUportalConfig);
+
+            //配置完成之后查询一次登陆用户获取一次terminal
+            TupEaddrContactorSearchItem contactorSearchItem = new TupEaddrContactorSearchItem();
+            contactorSearchItem.setDepId("");
+            contactorSearchItem.setExactSearch(0);
+            contactorSearchItem.setPageIndex(1);
+            contactorSearchItem.setSearchItem(LoginCenter.getInstance().getAccount());
+            contactorSearchItem.setSeqNo(1);
+            TupMgr.getInstance().getEaddrManagerIns().searchContactor(contactorSearchItem);
         }
 
         //Set up CTD business configuration information

@@ -86,6 +86,8 @@ public class ServiceMgr
 
         LocContext.init(context);
 
+        LogUtil.i(TAG, "sdk init is begin.");
+
         TupMgr tupMgr = TupMgr.getInstance();
 
         /* Step 1, set log param */

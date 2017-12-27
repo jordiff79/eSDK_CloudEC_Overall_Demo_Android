@@ -82,6 +82,8 @@
                 android:id="@+id/staff_no"
                 android:gravity="center_vertical"
                 android:textSize="20sp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:layout_marginLeft="20sp"/>
         </LinearLayout>
 
@@ -105,6 +107,8 @@
                 android:id="@+id/terminal"
                 android:gravity="center_vertical"
                 android:textSize="20sp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:layout_marginLeft="20sp"/>
         </LinearLayout>
 
@@ -128,6 +132,8 @@
                 android:id="@+id/dept_name"
                 android:gravity="center_vertical"
                 android:textSize="20sp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:layout_marginLeft="20sp"/>
         </LinearLayout>
 
@@ -151,6 +157,8 @@
                 android:id="@+id/title"
                 android:gravity="center_vertical"
                 android:textSize="20sp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:layout_marginLeft="20sp"/>
         </LinearLayout>
 
@@ -174,6 +182,8 @@
                 android:id="@+id/mobile"
                 android:gravity="center_vertical"
                 android:textSize="20sp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:layout_marginLeft="20sp"/>
         </LinearLayout>
 
@@ -197,6 +207,8 @@
                 android:id="@+id/office_phone"
                 android:gravity="center_vertical"
                 android:textSize="20sp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:layout_marginLeft="20sp"/>
         </LinearLayout>
 
@@ -220,6 +232,8 @@
                 android:id="@+id/home_phone"
                 android:gravity="center_vertical"
                 android:textSize="20sp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:layout_marginLeft="20sp"/>
         </LinearLayout>
 
@@ -243,6 +257,8 @@
                 android:id="@+id/email"
                 android:gravity="center_vertical"
                 android:textSize="20sp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:layout_marginLeft="20sp"/>
         </LinearLayout>
 
@@ -266,6 +282,8 @@
                 android:id="@+id/other_phone"
                 android:gravity="center_vertical"
                 android:textSize="20sp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:layout_marginLeft="20sp"/>
         </LinearLayout>
 
@@ -339,6 +357,8 @@
                 android:id="@+id/zip_code"
                 android:gravity="center_vertical"
                 android:textSize="20sp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:layout_marginLeft="20sp"/>
         </LinearLayout>
 
@@ -362,6 +382,8 @@
                 android:id="@+id/address"
                 android:gravity="center_vertical"
                 android:textSize="20sp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:layout_marginLeft="20sp"/>
         </LinearLayout>
 
