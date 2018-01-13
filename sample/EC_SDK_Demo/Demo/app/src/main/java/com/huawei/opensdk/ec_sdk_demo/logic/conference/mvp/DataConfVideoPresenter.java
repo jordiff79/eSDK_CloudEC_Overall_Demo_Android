@@ -90,6 +90,12 @@ public class DataConfVideoPresenter extends VideoConfBasePresenter
     }
 
     @Override
+    public void setAutoRotation(Object object, boolean isOpen) {
+        return;
+    }
+
+
+    @Override
     public void attachRemoteVideo(long userID, long deviceID)
     {
         if (currentRemoteVideoUserID != 0)

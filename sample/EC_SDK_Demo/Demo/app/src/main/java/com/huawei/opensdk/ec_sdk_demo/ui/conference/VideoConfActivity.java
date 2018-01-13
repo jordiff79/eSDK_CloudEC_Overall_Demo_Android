@@ -128,6 +128,7 @@ public class VideoConfActivity extends MVPBaseActivity<IVideoConfContract.VideoC
         super.onResume();
         mPresenter.registerBroadcast();
         mPresenter.setVideoContainer(this, mConfSmallLayout, mConfShareLayout, mHideVideoLayout);
+        mPresenter.setAutoRotation(this, true);
 
         // 以下处理用于PBX下的视频会议
         Member self = MeetingMgr.getInstance().getCurrentConferenceSelf();
@@ -348,6 +349,7 @@ public class VideoConfActivity extends MVPBaseActivity<IVideoConfContract.VideoC
         super.onDestroy();
         mPresenter.leaveVideo();
         mPresenter.unregisterBroadcast();
+        mPresenter.setAutoRotation(this, false);
         PopupWindowUtil.getInstance().dismissPopupWindow(mPopupWindow);
     }
 

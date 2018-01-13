@@ -105,7 +105,7 @@ public class EnterpriseAddressBookMgr implements TupEaddrNotify {
      */
     public EnterpriseAddressBookMgr() {
         tupEaddrManager = TupMgr.getInstance().getEaddrManagerIns();
-        queryContactsInfoSeq = 2;
+        queryContactsInfoSeq = 1;
         queryContactsIconSeq = 1;
         queryDepartmentSeq = 1;
     }
@@ -318,11 +318,6 @@ public class EnterpriseAddressBookMgr implements TupEaddrNotify {
                     entAddressBookInfo.setEaddrDept(contactorInfo.getDeptName());
                     entAddressBookInfo.setSysIconID(10);
                     contactsList.add(entAddressBookInfo);
-                }
-                if (1 == totalNum && contactorInfos.get(0).getStaffAccount().equals(LoginCenter.getInstance().getAccount()))
-                {
-                    String terminal = contactorInfos.get(0).getTerminal();
-                    LoginCenter.getInstance().getSipAccountInfo().setTerminal(terminal);
                 }
                 queryContactsResult.setList(contactsList);
                 notification.onEntAddressBookNotify(EntAddressBookConstant.Event.SEARCH_CONTACTS_COMPLETE, queryContactsResult);

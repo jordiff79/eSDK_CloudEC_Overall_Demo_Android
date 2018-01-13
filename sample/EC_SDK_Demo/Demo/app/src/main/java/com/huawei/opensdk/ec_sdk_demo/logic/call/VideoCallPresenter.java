@@ -200,7 +200,7 @@ public class VideoCallPresenter extends MVPBasePresenter<IVideoCallContract.Vide
 
     @Override
     public void setAutoRotation(Object object, boolean isOpen) {
-        VideoMgr.getInstance().setAutoRotation(object, isOpen);
+        VideoMgr.getInstance().setAutoRotation(object, isOpen, 1);
     }
 
     /**

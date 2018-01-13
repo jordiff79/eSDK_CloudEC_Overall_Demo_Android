@@ -98,6 +98,12 @@ public class VideoConfPresenter extends VideoConfBasePresenter
     }
 
     @Override
+    public void setAutoRotation(Object object, boolean isOpen) {
+        VideoMgr.getInstance().setAutoRotation(object, isOpen, 2);
+    }
+
+
+    @Override
     public void attachRemoteVideo(long userID, long deviceID)
     {
         //do nothing

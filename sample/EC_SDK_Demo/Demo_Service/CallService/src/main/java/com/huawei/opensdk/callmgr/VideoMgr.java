@@ -59,7 +59,9 @@ public class VideoMgr {
 
     private static final String BMP_FILE = "CameraBlack.BMP";
 
+    public static final int LAYOUT_PORTRAIT = 1;
 
+    public static final int LAYOUT_LANDSCAPE = 2;
 
     public VideoMgr() {
         context = LocContext.getContext();
@@ -391,10 +393,12 @@ public class VideoMgr {
      * @param object 调用者对象
      * @param isOpen 是否开启方向调整
      */
-    public void setAutoRotation(Object object, boolean isOpen) {
+    public void setAutoRotation(Object object, boolean isOpen, int layoutDirect) {
         if (orientationDetector == null) {
             orientationDetector = new OrientationDetector();
         }
+
+        orientationDetector.setLayoutDirect(layoutDirect);
 
         orientationDetector.autoOrientationAdjust(object, isOpen);
     }
@@ -436,7 +440,9 @@ public class VideoMgr {
         /**
          * 竖向布局
          */
-        private static final int LAYOUT_PORTRAIT = 1;
+        //private static final int LAYOUT_PORTRAIT = 1;
+
+        //private static final int LAYOUT_LANDSCAPE = 2;
 
         /**
          * 布局方向，默认为竖向布局

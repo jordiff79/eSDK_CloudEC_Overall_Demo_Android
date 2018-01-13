@@ -435,6 +435,30 @@ class AuthEventAdapt implements TupLoginNotify {
         int result = -1;
         LoginResult loginResult = new LoginResult();
 
+        //Set up configuration information for an enterprise address book
+        if (TupMgr.getInstance().getFeatureMgr().isSupportAddressbook()) {
+            TupEaddrUportalConfig eaddrUportalConfig = new TupEaddrUportalConfig();
+            EntAddressBookConfigInfo entAddressBookConfigInfo = LoginCenter.getInstance().getEntAddressBookConfigInfo();
+            eaddrUportalConfig.setToken(entAddressBookConfigInfo.getToken());
+            eaddrUportalConfig.setAvatarServerAddr(entAddressBookConfigInfo.getIconServer());
+            eaddrUportalConfig.setCertFilePath("");
+            eaddrUportalConfig.setDeptFilePath(CONTACT_FILE_PATH + File.separator + "dept" + File.separator);
+            eaddrUportalConfig.setHttpServerAddr(entAddressBookConfigInfo.getContactServer());
+            File file = new File(CONTACT_FILE_PATH + File.separator + "icon" + File.separator);
+            if (!file.exists())
+            {
+                file.mkdirs();
+            }
+            eaddrUportalConfig.setIconFilePath(CONTACT_FILE_PATH + File.separator + "icon" + File.separator);
+            eaddrUportalConfig.setPageItemMax(50); //Maximum number of current page display
+            eaddrUportalConfig.setType(1);
+            eaddrUportalConfig.setVerifyMode(0);
+            eaddrUportalConfig.setServerAddr("");
+            TupEaddrProxy tupEaddrProxy = new TupEaddrProxy("", 0, "", "");
+            eaddrUportalConfig.setPorxy(tupEaddrProxy);
+            TupMgr.getInstance().getEaddrManagerIns().config(eaddrUportalConfig);
+        }
+
         //如果支持音视频呼叫，则发起音视频呼叫的注册
         if (TupMgr.getInstance().getFeatureMgr().isSupportAudioAndVideoCall()) {
             Log.d(TAG, "reg sip account.");
@@ -465,39 +489,6 @@ class AuthEventAdapt implements TupLoginNotify {
             TupMgr.getInstance().getConfManagerIns().setConfType(confInfo.getConfEnvType());
             TupMgr.getInstance().getConfManagerIns().setConfServer(confInfo.getServerUri(), confInfo.getServerPort());
             TupMgr.getInstance().getConfManagerIns().setAuthToken(this.uportalAuthorizeResult.getAuthToken());
-        }
-
-        //Set up configuration information for an enterprise address book
-        if (TupMgr.getInstance().getFeatureMgr().isSupportAddressbook()) {
-            TupEaddrUportalConfig eaddrUportalConfig = new TupEaddrUportalConfig();
-            EntAddressBookConfigInfo entAddressBookConfigInfo = LoginCenter.getInstance().getEntAddressBookConfigInfo();
-            eaddrUportalConfig.setToken(entAddressBookConfigInfo.getToken());
-            eaddrUportalConfig.setAvatarServerAddr(entAddressBookConfigInfo.getIconServer());
-            eaddrUportalConfig.setCertFilePath("");
-            eaddrUportalConfig.setDeptFilePath(CONTACT_FILE_PATH + File.separator + "dept" + File.separator);
-            eaddrUportalConfig.setHttpServerAddr(entAddressBookConfigInfo.getContactServer());
-            File file = new File(CONTACT_FILE_PATH + File.separator + "icon" + File.separator);
-            if (!file.exists())
-            {
-                file.mkdirs();
-            }
-            eaddrUportalConfig.setIconFilePath(CONTACT_FILE_PATH + File.separator + "icon" + File.separator);
-            eaddrUportalConfig.setPageItemMax(50); //Maximum number of current page display
-            eaddrUportalConfig.setType(1);
-            eaddrUportalConfig.setVerifyMode(0);
-            eaddrUportalConfig.setServerAddr("");
-            TupEaddrProxy tupEaddrProxy = new TupEaddrProxy("", 0, "", "");
-            eaddrUportalConfig.setPorxy(tupEaddrProxy);
-            TupMgr.getInstance().getEaddrManagerIns().config(eaddrUportalConfig);
-
-            //配置完成之后查询一次登陆用户获取一次terminal
-            TupEaddrContactorSearchItem contactorSearchItem = new TupEaddrContactorSearchItem();
-            contactorSearchItem.setDepId("");
-            contactorSearchItem.setExactSearch(0);
-            contactorSearchItem.setPageIndex(1);
-            contactorSearchItem.setSearchItem(LoginCenter.getInstance().getAccount());
-            contactorSearchItem.setSeqNo(1);
-            TupMgr.getInstance().getEaddrManagerIns().searchContactor(contactorSearchItem);
         }
 
         //Set up CTD business configuration information
