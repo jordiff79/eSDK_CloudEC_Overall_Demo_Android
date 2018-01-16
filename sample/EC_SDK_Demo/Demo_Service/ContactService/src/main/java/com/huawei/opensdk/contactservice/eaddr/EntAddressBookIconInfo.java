@@ -7,7 +7,7 @@ package com.huawei.opensdk.contactservice.eaddr;
 public class EntAddressBookIconInfo {
 
     /**
-     * Account of the user query
+     * Account of the user
      * 用户账号
      */
     private String account;

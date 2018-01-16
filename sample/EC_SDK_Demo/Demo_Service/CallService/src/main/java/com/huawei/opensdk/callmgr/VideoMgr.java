@@ -485,7 +485,7 @@ public class VideoMgr {
          */
         public OrientationDetector() {
             // 创建监听
-            createOrientationListener();
+            //createOrientationListener();
         }
 
         /**
@@ -505,6 +505,10 @@ public class VideoMgr {
          */
         public void autoOrientationAdjust(Object object, boolean isOpen) {
             if (isOpen) {
+                if (orientationEventListenerList.size() == 0) {
+                    // 创建监听
+                    createOrientationListener();
+                }
                 // 添加调用者到监听列表
                 if (!orientationEventListenerList.contains(object)) {
                     orientationEventListenerList.add(object);
