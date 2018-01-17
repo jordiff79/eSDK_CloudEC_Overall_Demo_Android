@@ -391,7 +391,7 @@ public class DataConference implements IConferenceUI {
      */
     public boolean videoOpen(long deviceID)
     {
-        videoSetParam(deviceID, 128, 96, 10, 0);
+        videoSetParam(deviceID, 128*4, 96*4, 20, 0);
         Log.i(TAG, "video open deviceID: " + deviceID);
         int nRet = mConfIns.videoOpen(deviceID);
         return (nRet == 0);

@@ -29,7 +29,7 @@
             android:layout_toRightOf="@id/group_iv"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="@string/group"
+            android:text="@string/chat_groups"
             android:textColor="@color/textPrimary"
             android:textSize="16sp"/>
     </com.huawei.opensdk.ec_sdk_demo.widget.BottomLineLayout>
