@@ -1373,11 +1373,11 @@ public class ImMgr implements IImMgr, TupImCallback, TupUmNotify
         for (InstantMessage message : messages)
         {
             //Send yourself（PC group sent, mobile phone received）
-            if (!mMyAccount.equals(message.getFromId()))
-            {
-                int number = UnreadMessageService.getInstance().getUnreadMessageCountByAccount(message.getFromId());
-                UnreadMessageService.getInstance().saveUnreadMessage(message.getFromId(), number + 1);
-            }
+//            if (!mMyAccount.equals(message.getFromId()))
+//            {
+//                int number = UnreadMessageService.getInstance().getUnreadMessageCountByAccount(message.getFromId());
+//                UnreadMessageService.getInstance().saveUnreadMessage(message.getFromId(), number + 1);
+//            }
         }
     }
 
