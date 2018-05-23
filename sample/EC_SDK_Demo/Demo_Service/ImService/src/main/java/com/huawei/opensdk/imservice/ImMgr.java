@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.huawei.common.constant.ResponseCodeHandler;
+import com.huawei.contacts.ContactCache;
 import com.huawei.contacts.ContactLogic;
 import com.huawei.contacts.PersonalContact;
 import com.huawei.dao.impl.RecentChatContactDao;
@@ -241,16 +242,18 @@ public class ImMgr implements IImMgr, TupImCallback, TupUmNotify
         //将个人状态设置为离线
         setImLoginStatus(ImConstant.ImStatus.AWAY);
         ExecuteResult result = TupIm.instance().logout(false);
-        if (result.isResult() == false)
+        if (null != result && result.isResult() == false)
         {
             Log.e(TAG, "Im logout failed.");
         }
-        //imUnInit();
-        //umUnInit();
+//        imUnInit();
+//        umUnInit();
 
         //Clear unread message map.
         //清除未读消息的map集合
         UnreadMessageService.getInstance().clearUnreadMap();
+
+        TupIm.instance().clearResources();
     }
 
     /**

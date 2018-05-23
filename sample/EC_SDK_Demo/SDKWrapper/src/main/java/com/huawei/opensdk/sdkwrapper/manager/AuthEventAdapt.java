@@ -23,9 +23,11 @@ import com.huawei.tup.login.LoginConfigQueryRes;
 import com.huawei.tup.login.LoginDetectServer;
 import com.huawei.tup.login.LoginFirewallMode;
 import com.huawei.tup.login.LoginGetMediaXVersionResult;
+import com.huawei.tup.login.LoginGetSiteInfoResult;
 import com.huawei.tup.login.LoginIpAddrActiveResult;
 import com.huawei.tup.login.LoginOnUc32UportalTokenRefresh;
 import com.huawei.tup.login.LoginSmcAuthorizeResult;
+import com.huawei.tup.login.LoginTempuserInfo;
 import com.huawei.tup.login.LoginUportalAuthorizeResult;
 import com.huawei.tup.login.sdk.TupLoginErrorID;
 import com.huawei.tup.login.sdk.TupLoginNotify;
@@ -424,7 +426,17 @@ class AuthEventAdapt implements TupLoginNotify {
     }
 
     @Override
+    public void onGetSiteInfoResult(TupLoginOptResult tupLoginOptResult, LoginGetSiteInfoResult loginGetSiteInfoResult) {
+
+    }
+
+    @Override
     public void onGetMediaXVersionResult(TupLoginOptResult tupLoginOptResult, LoginGetMediaXVersionResult loginGetMediaXVersionResult) {
+
+    }
+
+    @Override
+    public void onGetTempuserResult(TupLoginOptResult tupLoginOptResult, LoginTempuserInfo loginTempuserInfo) {
 
     }
 

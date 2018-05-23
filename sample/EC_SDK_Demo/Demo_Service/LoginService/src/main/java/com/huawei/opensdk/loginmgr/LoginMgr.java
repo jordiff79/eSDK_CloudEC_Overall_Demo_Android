@@ -116,7 +116,9 @@ public class LoginMgr implements ITupLoginCenterNotify
         authorizeParam.setAuthType(LoginAuthType.LOGIN_E_AUTH_NORMAL);
         authorizeParam.setAuthInfo(authInfo);
         authorizeParam.setAuthServer(serverInfo);
-        authorizeParam.setUserAgent("SoftClient on Mobile");
+//        authorizeParam.setUserAgent("SoftClient on Mobile");
+        //兼容公有云环境 需修改agent标识
+        authorizeParam.setUserAgent("Huawei TE Mobile");
         authorizeParam.setUserTiket("");
 
         int uportalLoginResult = LoginCenter.getInstance().login(authorizeParam);

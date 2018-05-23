@@ -618,7 +618,9 @@ public class TupMgr
         TupCallCfgSIP tupCallCfgSIP = TupMgr.getInstance().getTupCallCfgSIP();
 
         tupCallCfgSIP.setSipSessionTimerEnable(TupBool.TUP_TRUE);
-        tupCallCfgSIP.setEnvUseagent("SoftClient on Mobile");
+//        tupCallCfgSIP.setEnvUseagent("SoftClient on Mobile");
+        //兼容公有云环境 需修改agent标识
+        tupCallCfgSIP.setEnvUseagent("Huawei TE Mobile");
         tupCallCfgSIP.setEnvProductType(TupCallParam.CALL_E_PRODUCT_TYPE.CALL_E_PRODUCT_TYPE_MOBILE);
         tupCallCfgSIP.setRegSub(TupBool.TUP_TRUE);
         tupCallCfgSIP.setSipSupport100rel(TupBool.TUP_TRUE);
